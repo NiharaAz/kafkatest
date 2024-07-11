@@ -1,4 +1,4 @@
-package Database.model;
+package com.example.kafka_test.Database.Profile.model;
 
 import jakarta.persistence.*;
 

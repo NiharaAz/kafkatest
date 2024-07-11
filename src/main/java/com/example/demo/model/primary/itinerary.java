@@ -1,4 +1,4 @@
-package Database.model;
+package com.example.demo.model.primary;
 
 import jakarta.persistence.*;
 
@@ -11,7 +11,7 @@ public class itinerary {
     String TD_NO;
     String NAT_CD;
     String BIRTH_DATE;
-    String TRANSALATED_ID;
+    String TRANSLATED_ID;
     String MESSAGE_DATETIME;
     String AUDIT_DATETIME;
 }
