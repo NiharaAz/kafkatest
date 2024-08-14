@@ -1,4 +1,4 @@
-package com.example.kafka_test.data;
+package com.example.kafka_test.queueData;
 
 import lombok.Data;
 import lombok.Getter;

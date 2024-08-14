@@ -9,13 +9,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name="help")
+@Table(name="person")
 
-public class person {
+public class profile {
     @Id
     String Id;
-    String name;
-    public person(){
+
+    public profile(){
 
     }
 

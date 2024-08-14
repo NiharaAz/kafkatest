@@ -13,21 +13,20 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "com.example.kafka_test.database.profile.repository",
-        entityManagerFactoryRef = "PersonEntityManagerFactoryBean",
-        transactionManagerRef = "PersonTransactionManager"
+        basePackages = "com.example.kafka_test.database.personDomain.repository",
+        entityManagerFactoryRef = "personDomainEntityManagerFactoryBean",
+        transactionManagerRef = "personDomainTransactionManager"
 )
-public class PersonJPAConfiguration {
+public class personDomainJPAconfiguration {
     @Bean
-    LocalContainerEntityManagerFactoryBean PersonEntityManagerFactoryBean (EntityManagerFactoryBuilder entityManagerFactoryBuilder, @Qualifier("personDatasource") DataSource dataSource){
+    LocalContainerEntityManagerFactoryBean personDomainEntityManagerFactoryBean(EntityManagerFactoryBuilder entityManagerFactoryBuilder, @Qualifier("personDomainDatasource") DataSource dataSource){
         return entityManagerFactoryBuilder
                 .dataSource(dataSource)
-                .packages("com.example.kafka_test.database.profile.model")
+                .packages("com.example.kafka_test.database.personDomain.model")
                 .build();
     }
-
     @Bean
-    PlatformTransactionManager PersonTransactionManager(@Qualifier("PersonEntityManagerFactoryBean") LocalContainerEntityManagerFactoryBean emfb){
+    PlatformTransactionManager personDomainTransactionManager(@Qualifier("personDomainEntityManagerFactoryBean") LocalContainerEntityManagerFactoryBean emfb){
         return new JpaTransactionManager(emfb.getObject());
     }
 }

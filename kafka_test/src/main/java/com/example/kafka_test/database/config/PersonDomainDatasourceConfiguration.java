@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-public class PersonDatasourceConfiguration {
-    @ConfigurationProperties("spring.datasource.person")
+public class PersonDomainDatasourceConfiguration {
+    @ConfigurationProperties("spring.datasource.person-domain")
     @Bean
-    public DataSourceProperties PersonDatasourceProperties(){
+    public DataSourceProperties PersonDomainDatasourceProperties(){
         return new DataSourceProperties();
     }
 
     @Bean
-    public DataSource personDatasource(){
-        return PersonDatasourceProperties().initializeDataSourceBuilder().build();
+    public DataSource personDomainDatasource(){
+        return PersonDomainDatasourceProperties().initializeDataSourceBuilder().build();
     }
 }
