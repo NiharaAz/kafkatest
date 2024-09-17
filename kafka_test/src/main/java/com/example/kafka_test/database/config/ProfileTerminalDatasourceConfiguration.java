@@ -4,22 +4,19 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class MySqlDatasourceConfiguration {
-
-    @ConfigurationProperties("spring.datasource.mysql")
+public class ProfileTerminalDatasourceConfiguration {
+    @ConfigurationProperties("spring.datasource.profile-terminal")
     @Bean
-    public DataSourceProperties mySqlDatasourceProperties(){
+    public DataSourceProperties ProfileTerminalDatasourceProperties(){
         return new DataSourceProperties();
     }
 
     @Bean
-    @Primary
-    public DataSource mysqlDatasource(){
-        return mySqlDatasourceProperties().initializeDataSourceBuilder().build();
+    public DataSource profileTerminalDatasource(){
+        return ProfileTerminalDatasourceProperties().initializeDataSourceBuilder().build();
     }
 }

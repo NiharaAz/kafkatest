@@ -1,4 +1,4 @@
-package com.example.kafka_test.database.profile.model;
+package com.example.kafka_test.database.profile_terminal.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 @Table(name="person")
 
-public class profile {
+public class profile_terminal {
     @Id
     String Id;
 
-    public profile(){
+    public profile_terminal(){
 
     }
 

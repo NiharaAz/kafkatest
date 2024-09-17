@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 
 public class mmbs_Ref_Info {
-    String datasrc;
+    String dataSrc;
     String primaryExternalId;
     String secondaryExternalId;
 

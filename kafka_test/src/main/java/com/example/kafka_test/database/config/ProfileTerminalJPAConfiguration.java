@@ -13,21 +13,21 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "com.example.kafka_test.database.profile.repository",
-        entityManagerFactoryRef = "ProfileEntityManagerFactoryBean",
-        transactionManagerRef = "ProfileTransactionManager"
+        basePackages = "com.example.kafka_test.database.profile_terminal.repository",
+        entityManagerFactoryRef = "ProfileTerminalEntityManagerFactoryBean",
+        transactionManagerRef = "ProfileTerminalTransactionManager"
 )
-public class ProfileJPAConfiguration {
+public class ProfileTerminalJPAConfiguration {
     @Bean
-    LocalContainerEntityManagerFactoryBean ProfileEntityManagerFactoryBean(EntityManagerFactoryBuilder entityManagerFactoryBuilder, @Qualifier("profileDatasource") DataSource dataSource){
+    LocalContainerEntityManagerFactoryBean ProfileTerminalEntityManagerFactoryBean(EntityManagerFactoryBuilder entityManagerFactoryBuilder, @Qualifier("profileTerminalDatasource") DataSource dataSource){
         return entityManagerFactoryBuilder
                 .dataSource(dataSource)
-                .packages("com.example.kafka_test.database.profile.model")
+                .packages("com.example.kafka_test.database.profile_terminal.model")
                 .build();
     }
 
     @Bean
-    PlatformTransactionManager ProfileTransactionManager(@Qualifier("ProfileEntityManagerFactoryBean") LocalContainerEntityManagerFactoryBean emfb){
+    PlatformTransactionManager ProfileTerminalTransactionManager(@Qualifier("ProfileTerminalEntityManagerFactoryBean") LocalContainerEntityManagerFactoryBean emfb){
         return new JpaTransactionManager(emfb.getObject());
     }
 }

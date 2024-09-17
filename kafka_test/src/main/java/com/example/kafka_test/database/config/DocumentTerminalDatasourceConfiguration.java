@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-public class ProfileDatasourceConfiguration {
-    @ConfigurationProperties("spring.datasource.profile")
+public class DocumentTerminalDatasourceConfiguration {
+    @ConfigurationProperties("spring.datasource.document-terminal")
     @Bean
-    public DataSourceProperties ProfileDatasourceProperties(){
+    public DataSourceProperties DocumentTerminalDatasourceProperties(){
         return new DataSourceProperties();
     }
 
     @Bean
-    public DataSource profileDatasource(){
-        return ProfileDatasourceProperties().initializeDataSourceBuilder().build();
+    public DataSource documentTerminalDatasource(){
+        return DocumentTerminalDatasourceProperties().initializeDataSourceBuilder().build();
     }
 }

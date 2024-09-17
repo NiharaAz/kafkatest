@@ -1,11 +1,9 @@
 package com.example.kafka_test.database.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -15,23 +13,21 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "com.example.kafka_test.database.itinerary.repository",
-        entityManagerFactoryRef = "mySqlEntityManagerFactoryBean",
-        transactionManagerRef = "mySqlTransactionManager"
+        basePackages = "com.example.kafka_test.database.document_terminal.repository",
+        entityManagerFactoryRef = "DocumentTerminalEntityManagerFactoryBean",
+        transactionManagerRef = "DocumentTerminalTransactionManager"
 )
-public class MySQLJPAConfiguration {
+public class DocumentTerminalJPAConfiguration {
     @Bean
-    @Primary
-    LocalContainerEntityManagerFactoryBean mySqlEntityManagerFactoryBean (EntityManagerFactoryBuilder entityManagerFactoryBuilder, @Qualifier("mysqlDatasource") DataSource dataSource){
+    LocalContainerEntityManagerFactoryBean DocumentTerminalEntityManagerFactoryBean(EntityManagerFactoryBuilder entityManagerFactoryBuilder, @Qualifier("documentTerminalDatasource") DataSource dataSource){
         return entityManagerFactoryBuilder
                 .dataSource(dataSource)
-                .packages("com.example.kafka_test.database.itinerary.model")
+                .packages("com.example.kafka_test.database.document_terminal.model")
                 .build();
     }
 
     @Bean
-    @Primary
-    PlatformTransactionManager mySqlTransactionManager(@Qualifier("mySqlEntityManagerFactoryBean") LocalContainerEntityManagerFactoryBean emfb){
+    PlatformTransactionManager DocumentTerminalTransactionManager(@Qualifier("DocumentTerminalEntityManagerFactoryBean") LocalContainerEntityManagerFactoryBean emfb){
         return new JpaTransactionManager(emfb.getObject());
     }
 }
