@@ -50,7 +50,7 @@ public class APIs {
         }
 
         HttpRequest postRequest = HttpRequest.newBuilder()
-                .uri(new URI(urlMMbs + "/"+personid))
+                .uri(new URI(urlMMbs +"/biometric/v1/person/get/" +personid))
                 .GET()
                 .build();
         HttpClient httpClient = HttpClient.newHttpClient();

@@ -22,19 +22,22 @@ public class DemoApplication  {
    /* @Autowired
     private KafkaTemplate<String, String> Template;*/
 
-    @Autowired
-    SendToQueue sendToQueue;
+    private final SendToQueue sendToQueue;
+
+    private final validate_controller validateController;
+
+    private final APIs apIs;
+    private final Utilities utilities;
+    private final Mapping mapping;
 
     @Autowired
-    validate_controller validateController;
-    String Topic="T.ICS.EXT.TTP.P3";
-
-    @Autowired
-    APIs apIs;
-    @Autowired
-    Utilities utilities;
-    @Autowired
-    Mapping mapping;
+    public DemoApplication(SendToQueue sendToQueue, validate_controller validateController, APIs apIs, Utilities utilities, Mapping mapping) {
+        this.sendToQueue = sendToQueue;
+        this.validateController = validateController;
+        this.apIs = apIs;
+        this.utilities = utilities;
+        this.mapping = mapping;
+    }
 
     private Map<String, String> terminalMapped;
     @PostConstruct
@@ -527,7 +530,7 @@ public class DemoApplication  {
                 validateController.validate_biom_profile_image(personId);
             }
 
-            APIs apIs= new APIs(mapping, utilities);
+           // APIs apIs= new APIs(mapping, utilities);
             apIs.mmbsGETBIOMapi(personId,nric);
             apIs.identify(UUID.randomUUID().toString(),TdNo,natCd,dob,terminal_mapped,direction,VDT_input,nric);
 
