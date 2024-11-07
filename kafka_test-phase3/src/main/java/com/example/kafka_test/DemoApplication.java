@@ -30,6 +30,9 @@ public class DemoApplication  {
     private final Utilities utilities;
     private final Mapping mapping;
 
+    Random random = new Random();
+
+
     @Autowired
     public DemoApplication(SendToQueue sendToQueue, validate_controller validateController, APIs apIs, Utilities utilities, Mapping mapping) {
         this.sendToQueue = sendToQueue;
@@ -136,7 +139,6 @@ public class DemoApplication  {
             return ;
         }
 
-        Random random = new Random();
         int lengthTdNo = random.nextInt(1,21);
         String TdNoGenerated = utilities.generateRandomAlphanumericString(lengthTdNo);
 
@@ -452,14 +454,14 @@ public class DemoApplication  {
 
 
         SetICSData setICSData= new SetICSData();
-        ICS_data data= setICSData.SetData(TdNo, ItinId, nric,VDT_input,terminal);
+        ICS_data data= setICSData.SetDataWithdob(TdNo, ItinId, nric,VDT_input,terminal,dob);
         //SendToKafka(data);
         sendToQueue.SendToKafka(data);//new change 24-10
 
         String terminal_Mapped= terminalMapped.get(terminal);
         try{
-            String personId = validateController.validate_personKey(TdNo,"SG",dob);
-            validateController.validate_itineraryId(ItinId,nric,TdNo,"SG",dob,terminal_Mapped,"I",VDT_input,personId);
+            String personId = validateController.validate_personKey(TdNo,natCd,dob);
+            validateController.validate_itineraryId(ItinId,nric,TdNo,natCd,dob,terminal_Mapped,"I",VDT_input,personId);
 
             apIs.identify(UUID.randomUUID().toString(),TdNo,natCd,dob,terminal_Mapped,"I",VDT_input,nric);
 
@@ -485,8 +487,13 @@ public class DemoApplication  {
         }
 
         utilities.dropTable();
-        Random random = new Random();
+        int statusCode = apIs.DeleteAPI();
+        if(statusCode!= 204){
+            Log.info("unable to delete from mmbs. status code is "+statusCode);
+            return ;
+        }
         int lengthTdNo = random.nextInt(1,21);
+
         String TdNoGenerated = utilities.generateRandomAlphanumericString(lengthTdNo);
 
         SetICSData setICSData= new SetICSData();
