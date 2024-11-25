@@ -60,18 +60,6 @@ public class DemoApplication  {
         Template.send(record);
     }*/
 
-  /*  public void SendToKafka_withoutenroll(String TdNo, String ItinId, String nric,String VDT,String terminal) throws JsonProcessingException {
-        Log.info("*** Sending msg to Kafka Queue ***");
-           ObjectMapper objectMapper= new ObjectMapper();
-        SetICSData setICSData= new SetICSData();
-        ICS_data data= setICSData.SetData(TdNo,ItinId,nric,VDT,terminal);
-        String jsonString= objectMapper.writeValueAsString(data);
-        System.out.println("jsonString is" +jsonString);
-        ProducerRecord<String,String> record= new ProducerRecord<>(this.Topic,jsonString);
-        record.headers().add("msgActCd", "A".getBytes());
-        record.headers().add("msgCreateDateTime","2021-08-24T18:15:01Z".getBytes());
-        Template.send(record);
-    }*/
 
     private String bioMode;
 
@@ -134,7 +122,7 @@ public class DemoApplication  {
         utilities.dropTable();
         int statusCode = apIs.DeleteAPI();
 
-        if (statusCode!=204){ // new change 25-10
+        if (statusCode!=204){
             Log.info("***** unable to delete from mmbs. Resonse Status code is "+statusCode);
             return ;
         }
@@ -146,17 +134,16 @@ public class DemoApplication  {
         String terminal="C";
         String TdNo=TdNoGenerated;
         String ItinId= UUID.randomUUID().toString();
-        String nric="S1002D";//23-10 changed
+        String nric="S1002D";
 
-        String VDT_input = utilities.generateValidityEndDateTime();//23-10 changed this
-        //String VDT_input = "2028-11-11T00:09:00Z";
+        String VDT_input = utilities.generateValidityEndDateTime();
         Log.info("VDT is "+VDT_input);
 
         ICS_data data= setICSData.SetData(TdNo, ItinId, nric,VDT_input,terminal);
 
         //ingest into kafka queue
         //SendToKafka(data);
-        sendToQueue.SendToKafka(data);//24-10 new change
+        sendToQueue.SendToKafka(data);
 
 
         String dob= String.valueOf(data.getTravellerInfo().getDobTxt());
@@ -250,6 +237,7 @@ public class DemoApplication  {
         ICS_data data= setICSData.SetData(TdNo, ItinId, nric,VDT_input,terminal);
         //ingest person A into kafka queue
         //SendToKafka(data);
+        Log.info("*** Sending 1st message to queue ****");
         sendToQueue.SendToKafka(data);
         //validate if personKey in ingested data is == personKey in DB
         String dob= String.valueOf(data.getTravellerInfo().getDobTxt());
@@ -261,12 +249,15 @@ public class DemoApplication  {
         ICS_data data1= setICSData.SetData(TdNo2, ItinId2, nric,VDT_input,terminal);
         //ingest person B into kafka queue
         //SendToKafka(data1);
+        Log.info("*** Sending 2nd message to queue ****");
         sendToQueue.SendToKafka(data1);
         //validate if personKey in ingested data is == personKey in DB
         Thread.sleep(3000);
         String terminal_Mapped = terminalMapped.get(terminal);
 
+        Log.info("*** Validating person key of 1st msg *** ");
         String personid= validateController.validate_personKey(TdNo,natCd,dob);
+        Log.info("*** Validating person key of 2nd msg *** ");
         String personid2= validateController.validate_personKey(TdNo2,natCd,dob);
 
         if(personid==null || personid2 == null){
@@ -274,10 +265,13 @@ public class DemoApplication  {
             return;
         }
         //Thread.sleep(3000);
+        Log.info("*** Validating 1st msg in ics_itinerary and profile terminal tables *** ");
         validateController.validate_itineraryId(ItinId,nric,TdNo,natCd,dob,terminal_Mapped,direction
                 ,VDT_input,personid);
         validateController.validate_terminal_personId(personid);
 
+
+        Log.info("*** Validating 2nd msg in ics_itinerary and profile terminal tables *** ");
         validateController.validate_itineraryId(ItinId2,nric,TdNo2,natCd,dob,terminal_Mapped,direction
                 ,VDT_input,personid2);
         validateController.validate_terminal_personId(personid2);
@@ -387,7 +381,7 @@ public class DemoApplication  {
 
     @ShellMethod
     public void Enroll2Itin1person_hardcoded() throws Exception {
-        Log.info(" **** Test case  Enroll 2 different Itin for 1 person");
+        Log.info(" **** Test case : Enroll 2 different Itin for 1 person");
 
         utilities.dropTable();
 
@@ -401,7 +395,8 @@ public class DemoApplication  {
         SetICSData setICSData= new SetICSData();
         ICS_data data= setICSData.SetData(TdNo, ItinId, nric,VDT_input,terminal);
         //ingest person A into kafka queue
-        //SendToKafka(data);
+
+        Log.info("*** Sending 1st message to queue ****");
         sendToQueue.SendToKafka(data);//newchange 24-10
 
         //validate if personKey in ingested data is == personKey in DB
@@ -414,6 +409,7 @@ public class DemoApplication  {
         ICS_data data1= setICSData.SetData(TdNo, ItinId2, nric,VDT_input,terminal);
         //ingest person B into kafka queue
         //SendToKafka(data1);
+        Log.info("*** Sending 2nd message to queue ****");
         sendToQueue.SendToKafka(data1);//new change 24-10
 
         //validate if personKey in ingested data is == personKey in DB
@@ -424,10 +420,12 @@ public class DemoApplication  {
         if(personid==null){
             return;
         }
+        Log.info("**** Validating itineraryId 1 *** ");
         //validate 1st itinId
          String TranslatedId1= validateController.validate_itineraryId(ItinId,nric,TdNo,natCd,dob,terminal_Mapped,direction
                 ,VDT_input,personid);
         //validate 2nd ItinId
+        Log.info("**** Validating itineraryId 2 *** ");
         String TranslatedId2 =validateController.validate_itineraryId(ItinId2,nric,TdNo,natCd,dob,terminal_Mapped,direction
                 ,VDT_input,personid);
 
@@ -455,15 +453,15 @@ public class DemoApplication  {
 
         SetICSData setICSData= new SetICSData();
         ICS_data data= setICSData.SetDataWithdob(TdNo, ItinId, nric,VDT_input,terminal,dob);
-        //SendToKafka(data);
-        sendToQueue.SendToKafka(data);//new change 24-10
+
+        sendToQueue.SendToKafka(data);
 
         String terminal_Mapped= terminalMapped.get(terminal);
         try{
             String personId = validateController.validate_personKey(TdNo,natCd,dob);
             validateController.validate_itineraryId(ItinId,nric,TdNo,natCd,dob,terminal_Mapped,"I",VDT_input,personId);
 
-            apIs.identify(UUID.randomUUID().toString(),TdNo,natCd,dob,terminal_Mapped,"I",VDT_input,nric);
+            apIs.identify(UUID.randomUUID().toString(),TdNo,natCd,dob,terminal_Mapped,"I",VDT_input,"S1002D");
 
             Log.info("**** test case passed - IdNo NULL is enrolled ***");
         }catch (Exception e){
@@ -478,13 +476,13 @@ public class DemoApplication  {
         Log.info("**** Enrolling 1 person with biom *** ");
 
 
-        if (bioMode != null) {
+       /* if (bioMode != null) {
             System.out.println("Enrolling with BioMode: " + bioMode);
-            // Your enrollment logic here
+
         } else {
             System.out.println("BioMode not set. Please set it using 'setBioMode' command.");
             return;
-        }
+        }*/
 
         utilities.dropTable();
         int statusCode = apIs.DeleteAPI();
@@ -505,14 +503,11 @@ public class DemoApplication  {
 
         ICS_data data= setICSData.SetData(TdNo, ItinId, nric,VDT_input,terminal);
 
-        //ingest into kafka queue
-        //SendToKafka(data);
-        sendToQueue.SendToKafka(data); //new change 24-10
 
+        sendToQueue.SendToKafka(data);
 
         String dob= String.valueOf(data.getTravellerInfo().getDobTxt());
         String natCd= data.getTravellerInfo().getNatCd();
-
 
         String terminal_mapped=terminalMapped.get(terminal);
         String direction=data.getItineraryInfo().getStatInOut();

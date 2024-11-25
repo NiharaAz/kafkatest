@@ -23,7 +23,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 @Component
-@ShellComponent
 public class Utilities {
 
     @Autowired
@@ -120,7 +119,7 @@ public class Utilities {
         return formattedOutput;
     }
 
-    @ShellMethod
+
     public String generateValidityEndDateTime() {
         // Create a Random instance
         Random random = new Random();

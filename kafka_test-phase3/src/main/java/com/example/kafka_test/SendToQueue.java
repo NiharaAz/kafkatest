@@ -13,14 +13,14 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Component;
 
 @Component
-@ShellComponent
+
 public class SendToQueue {
     @Autowired
     private KafkaTemplate<String, String> Template;
 
     private final String Topic="T.ICS.EXT.TTP.P3";
 
-    @ShellMethod
+
     public void SendToKafka(ICS_data data) throws JsonProcessingException {
         Log.info("*** Sending msg to Kafka Queue ***");
         ObjectMapper objectMapper= new ObjectMapper();
