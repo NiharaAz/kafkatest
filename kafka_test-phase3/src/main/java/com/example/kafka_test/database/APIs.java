@@ -3,10 +3,7 @@ package com.example.kafka_test.database;
 import com.example.kafka_test.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jline.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ShellComponent
 @Component
 public class APIs {
 
@@ -86,11 +82,11 @@ public class APIs {
     public void identify(String requestid,String tdNo,String natCd, String DOB,String Terminal,
                          String Direction,String VDET, String nric) throws URISyntaxException, IOException, InterruptedException {
 
-        Log.info(" **** sending Identify request ****");
+        validate_controller.Log.info(" **** sending Identify request ****");
 
         //Utilities utilities = new Utilities();
         VDET = utilities.ChangeVDT_to_SGt_identifyAPI(VDET);
-        Log.info("VDEt is " + VDET);
+        validate_controller.Log.info("VDEt is " + VDET);
         String key = nric;
 
         Map<String, List<Biometric>> mapping_of_biometrics_to_nric = mapping.mapping_of_biom_to_nric();
@@ -116,7 +112,7 @@ public class APIs {
         Thread.sleep(20000);
 
         JsonNode rootNode = objectMapper.readTree(getResponse.body());
-        Log.info("rootNode is " + rootNode);
+        validate_controller.Log.info("rootNode is " + rootNode);
         JsonNode candidates = rootNode.path("candidate");
 
 
@@ -170,15 +166,15 @@ public class APIs {
         if (decision.equals("HIT") && pptNum.equals(tdNo) && natcd.equals(natCd) && terminal.equals(Terminal)
                 && fltArrvlDateTime.equals(VDET) && dob.equals(DOB)
                 && direction.equals(Direction) && optionalelement.equals(nric)) {
-            Log.info("*** Identify passed ");
+            validate_controller.Log.info("*** Identify passed ");
 
         } else {
-            Log.info(" **** Identify failed ****");
+            validate_controller.Log.info(" **** Identify failed ****");
         }
 
     }
 
-    @ShellMethod
+
     public int DeleteAPI () throws IOException, InterruptedException, URISyntaxException { //23-10 changed
         HttpRequest deleteRequest = HttpRequest.newBuilder()
                 .uri(new URI(urlMMbs + "/biometric/v1/maintenance/delete-all-persons"))

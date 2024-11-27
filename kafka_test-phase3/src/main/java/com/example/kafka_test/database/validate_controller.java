@@ -3,10 +3,8 @@ package com.example.kafka_test.database;
 
 import com.example.kafka_test.database.biomProfile.model.biomProfile;
 import com.example.kafka_test.database.biomProfile.model.biomProfileImage;
-import com.example.kafka_test.database.biomProfile.repository.biomProfileImageDAO;
 import com.example.kafka_test.database.document_terminal.model.document_passport;
 import com.example.kafka_test.database.document_terminal.model.document_terminal;
-import com.example.kafka_test.database.biomProfile.repository.biomProfileDAO;
 import com.example.kafka_test.database.document_terminal.repository.document_passportDAO;
 import com.example.kafka_test.database.document_terminal.repository.document_terminalDAO;
 import com.example.kafka_test.database.itinerary.model.itinerary;
@@ -16,16 +14,16 @@ import com.example.kafka_test.database.profile_terminal.model.profile_terminal;
 import com.example.kafka_test.database.profile_terminal.repository.profile_terminalDAO;
 import com.example.kafka_test.database.personDomain.repository.personDomainDAO;
 import com.example.kafka_test.Utilities;
-import org.jline.utils.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
-import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
+import org.springframework.stereotype.Component;
 
 @Component
 public class validate_controller {
+
+    static final Logger Log = LoggerFactory.getLogger(validate_controller.class);
 
     @Autowired
     ItineraryDAO itineraryDAO;
@@ -34,16 +32,16 @@ public class validate_controller {
     @Autowired
     personDomainDAO person_Domain_DAO;
     @Autowired
-    biomProfileDAO biomProfileDAO;
+    com.example.kafka_test.database.biomProfile.repository.biomProfileDAO biomProfileDAO;
     @Autowired
-    biomProfileImageDAO biomProfileImageDAO;
+    com.example.kafka_test.database.biomProfile.repository.biomProfileImageDAO biomProfileImageDAO;
     @Autowired
     document_passportDAO documentPassportDAO;
     @Autowired
     document_terminalDAO documentTerminalDAO;
 
     Utilities utilities=new Utilities();
-    @ShellMethod
+
     public String validate_personKey(String tdNo, String natCd, String dob) throws Exception {
         Log.info("*** Validating personKey **** ");
         Thread.sleep(5000);
@@ -73,7 +71,7 @@ public class validate_controller {
         return personId;
 
     }
-    @ShellMethod
+
     public String validate_itineraryId(String itinId, String nric, String tdNo, String natCd, String dob, String terminal,
                                       String direction, String VDT, String personId) throws Exception {
         Log.info("*** Validating ics_itinerary table **** ");
@@ -108,7 +106,7 @@ public class validate_controller {
 
     }
 
-    @ShellMethod
+
     public void validate_terminal_personId(String personId) throws Exception {
         Log.info("*** Validating Profile's person Id **** ");
         boolean found =false;
@@ -157,7 +155,7 @@ public class validate_controller {
         }
     }
 
-    @ShellMethod
+
     public void validate_doc_bcbp(String direction, String terminal, String flt_arrvl_date,String docId) throws Exception {
         Log.info("*** Validating Profile Terminal's DOCUMENT_BCBP **** ");
 
@@ -185,7 +183,7 @@ public class validate_controller {
 
     }
 
-    @ShellMethod
+
     public void validate_biom_profile(String personId, String HAS_IMAGES){
         Log.info("*** Validating biometrics_domain's biom profile  **** ");
 
@@ -203,7 +201,7 @@ public class validate_controller {
             Log.info("**** BIOM DOMAIN BIOM_IMAGE table validation FAILED ***");
         }
     }
-    @ShellMethod
+
     public void validate_biom_profile_image(String personId)
     {
         Log.info("**** validating biometrics_domain's biom_profile_image table ***");

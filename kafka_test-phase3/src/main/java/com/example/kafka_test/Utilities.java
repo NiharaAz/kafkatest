@@ -1,13 +1,11 @@
 package com.example.kafka_test;
 
-import org.jline.utils.Log;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
@@ -55,7 +53,7 @@ public class Utilities {
         return result.toString();
     }
     public void dropTable() throws ClassNotFoundException, SQLException {
-        Log.info("*** DROPPING ALL PHASE 2 TABLES ****");
+        DemoApplication.Log.info("*** DROPPING ALL PHASE 2 TABLES ****");
         Resource resource = resourceLoader.getResource("classpath:SQLfiles/dropALLTABLES.sql");
 
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -65,9 +63,9 @@ public class Utilities {
 
         try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
             ScriptUtils.executeSqlScript(connection, resource);
-            Log.info("Tables dropped successfully.");
+            DemoApplication.Log.info("Tables dropped successfully.");
         } catch (SQLException e) {
-            Log.error("Error dropping tables: " + e.getMessage(), e);
+            DemoApplication.Log.error("Error dropping tables: " + e.getMessage(), e);
             throw e; // Rethrow or handle as needed
         }
     }

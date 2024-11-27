@@ -6,19 +6,19 @@ import com.example.kafka_test.queueData.ICS_data;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.jline.utils.Log;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 
-@ShellComponent
+import static com.example.kafka_test.DemoApplication.Log;
+
+
 @Component
 public class updateItinDemoApplication {
     @Autowired
@@ -71,7 +71,7 @@ public class updateItinDemoApplication {
         validateController.validate_doc_bcbp("I","SIN1",VDT_update,translatedId1);
     }
 
-    @ShellMethod
+
     public void updateVDET_hardcoded() throws Exception {
         Log.info( " **** Testing update VDET test case ***" );
 
@@ -136,7 +136,7 @@ public class updateItinDemoApplication {
 
     }
 
-    @ShellMethod
+
     public void updateChkpt_hardcoded () throws Exception {
         Log.info( " **** Testing update checkpoint test case ***" );
 

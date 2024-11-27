@@ -5,19 +5,14 @@ import com.example.kafka_test.queueData.ICS_data;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.jline.utils.Log;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
+
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
-import java.util.Random;
-import java.util.UUID;
 
-@ShellComponent
 @Component
 public class updateBiomDemoApplication {
     @Autowired
@@ -32,7 +27,7 @@ public class updateBiomDemoApplication {
     @Autowired
     private ResourceLoader resourceLoader;
     public void SendToKafka(ICS_data data) throws JsonProcessingException {
-        Log.info("*** Sending msg to Kafka Queue ***");
+        DemoApplication.Log.info("*** Sending msg to Kafka Queue ***");
         ObjectMapper objectMapper= new ObjectMapper();
         String jsonString= objectMapper.writeValueAsString(data);
 

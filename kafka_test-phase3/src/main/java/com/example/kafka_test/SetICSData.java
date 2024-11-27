@@ -4,12 +4,11 @@ import com.example.kafka_test.queueData.ICS_data;
 import com.example.kafka_test.queueData.Itinerary_Info;
 import com.example.kafka_test.queueData.mmbs_Ref_Info;
 import com.example.kafka_test.queueData.traveller_Info;
-import org.springframework.shell.standard.ShellOption;
 
 public class SetICSData {
 
 
-    public ICS_data SetData(String TdNo, String ItinId, String nric,String VDT, @ShellOption(defaultValue = "C") String terminal) {
+    public ICS_data SetData(String TdNo, String ItinId, String nric, String VDT, String terminal) {
         ICS_data icsData= new ICS_data();
 
         traveller_Info t= new traveller_Info();
@@ -38,7 +37,7 @@ public class SetICSData {
         return icsData;
     }
 
-    public ICS_data SetDataWithdob(String TdNo,String ItinId,String nric,String VDT_input,@ShellOption(defaultValue = "C") String terminal,String dob1) {
+    public ICS_data SetDataWithdob(String TdNo,String ItinId,String nric,String VDT_input,String terminal,String dob1) {
         ICS_data icsData= new ICS_data();
 
         traveller_Info t= new traveller_Info();
@@ -67,7 +66,7 @@ public class SetICSData {
         return icsData;
     }
 
-    public ICS_data SetDatawithnatCd(String TdNo, String ItinId, String nric, String VDT, @ShellOption(defaultValue = "C") String terminal,String natCd) {
+    public ICS_data SetDatawithnatCd(String TdNo, String ItinId, String nric, String VDT,  String terminal,String natCd) {
         ICS_data icsData= new ICS_data();
 
         traveller_Info t= new traveller_Info();

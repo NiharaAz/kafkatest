@@ -1,26 +1,27 @@
 package com.example.kafka_test;
 
-import com.example.kafka_test.database.*;
+import com.example.kafka_test.database.APIs;
+import com.example.kafka_test.database.Mapping;
+import com.example.kafka_test.database.validate_controller;
 import com.example.kafka_test.queueData.ICS_data;
+import com.example.kafka_test.database.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.jline.utils.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.*;
 
 @Component
-@ShellComponent
+
 public class DemoApplication  {
    /* @Autowired
     private KafkaTemplate<String, String> Template;*/
+
+    public static final Logger Log = LoggerFactory.getLogger(DemoApplication.class);
 
     private final SendToQueue sendToQueue;
 
@@ -63,7 +64,7 @@ public class DemoApplication  {
 
     private String bioMode;
 
-    @ShellMethod("Set biomode.")
+
     public void setBioMode(String mode) {
         this.bioMode = mode;
         System.out.println("BioMode set to: " + this.bioMode);
@@ -106,9 +107,10 @@ public class DemoApplication  {
 
     }
 
-    @ShellMethod
+
     public void enroll_hardcoded() throws Exception {
         Log.info("**** Enrolling 1 person with biom *** ");
+
 
 
         if (bioMode != null) {
@@ -218,7 +220,7 @@ public class DemoApplication  {
         validateController.validate_terminal_personId(personid2);
 
     }*/
-    @ShellMethod
+
     public void Enroll2personDiffTdNo_hardcoded() throws Exception {
 
         Log.info(" **** Test case  Enroll 2 different person with different TdNo but same nric, dob & natCd");
@@ -379,7 +381,7 @@ public class DemoApplication  {
 
      */
 
-    @ShellMethod
+
     public void Enroll2Itin1person_hardcoded() throws Exception {
         Log.info(" **** Test case : Enroll 2 different Itin for 1 person");
 
@@ -436,7 +438,7 @@ public class DemoApplication  {
 
     }
 
-    @ShellMethod
+
     public  void EnrollIdNoNull() throws SQLException, ClassNotFoundException, JsonProcessingException {
         Log.info(" **** Test case  Enroll IdNo is NULL ");
 
@@ -471,7 +473,7 @@ public class DemoApplication  {
 
     }
 
-    @ShellMethod
+
     public void enroll_biom_S1002D_S1003D_S1004D_hardcoded(String nric) throws Exception {
         Log.info("**** Enrolling 1 person with biom *** ");
 
