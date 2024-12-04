@@ -30,7 +30,9 @@
 		<java.version>17</java.version>
 <!--		<spring-shell.version>3.2.2</spring-shell.version>-->
 	</properties>
+
 	<dependencies>
+
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
@@ -40,8 +42,8 @@
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-spring</artifactId>
 			<version>7.20.1</version>
-
 		</dependency>
+
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
@@ -110,7 +112,13 @@
 			<version>3.3.3</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.masterthought</groupId>
+			<artifactId>maven-cucumber-reporting</artifactId>
+			<version>4.5.0</version>
+		</dependency>
 	</dependencies>
+
 
 	<!--<dependencyManagement>
 		<dependencies>
@@ -143,6 +151,7 @@
 					</goals></execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 

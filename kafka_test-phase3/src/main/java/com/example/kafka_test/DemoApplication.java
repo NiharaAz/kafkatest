@@ -149,7 +149,7 @@ public class DemoApplication  {
 
 
         String dob= String.valueOf(data.getTravellerInfo().getDobTxt());
-        String natCd= "SG";
+        String natCd= "MY";
 
 
         String terminal_mapped=terminalMapped.get(terminal);
@@ -159,7 +159,7 @@ public class DemoApplication  {
 
         Thread.sleep(3000);
 
-        try{
+       // try{
             personId = validateController.validate_personKey(TdNo,natCd,dob);
             Thread.sleep(3000);
             //ics itinerary VDET is in UTC timing
@@ -180,9 +180,10 @@ public class DemoApplication  {
             apIs.identify(UUID.randomUUID().toString(),TdNo,natCd,dob,terminal_mapped,direction,VDT_input,nric);
 
 
-        }catch(Exception e){
+       // }
+      /*  catch(Exception e){
             Log.info(e.getMessage());
-        }
+        }*/
     }
     //@ShellMethod
    /* public void Enroll2personDiffTdNo(String TdNo, String ItinId, String nric,String VDT_input, String TdNo2, String ItinId2,String terminal) throws Exception {
@@ -519,7 +520,7 @@ public class DemoApplication  {
         Thread.sleep(3000);
 
         try{
-            personId = validateController.validate_personKey(TdNo,natCd,dob);
+            personId = validateController.validate_personKey(TdNo,"MY",dob);
             Thread.sleep(3000);
             //ics itinerary VDET is in UTC timing
             String translatedId = validateController.validate_itineraryId(ItinId, nric, TdNo, natCd, dob, terminal_mapped,

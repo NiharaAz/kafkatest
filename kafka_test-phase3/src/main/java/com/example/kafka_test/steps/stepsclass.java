@@ -28,24 +28,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class stepsclass {
 
-    private static final Logger logger = LoggerFactory.getLogger(stepsclass.class);
     @Autowired
     private DemoApplication demoApplication;
 
     @Autowired
     private Utilities utilities;
-
     @Autowired
     private APIs apIs;
 
     @Autowired
     private SendToQueue sendToQueue ;
-
     @Autowired
     private validate_controller validateController ;
     Random random= new Random();
     int lengthTdNo = random.nextInt(1,21);
-
 
 
     public static final Logger Log = LoggerFactory.getLogger(stepsclass.class);
@@ -58,10 +54,16 @@ public class stepsclass {
     }
 
     @When("Enroll person")
-    public void enrollperson() throws Exception {
-        Log.info("Test case 1 : Enrolling and validating person in PERSIST mode");
-        demoApplication.setBioMode("PERSIST");
-        demoApplication.enroll_hardcoded();
+    public void enrollperson()  {
+
+        try{
+            Log.info("Test case 1 : Enrolling and validating person in PERSIST mode");
+            demoApplication.setBioMode("PERSIST");
+            demoApplication.enroll_hardcoded();
+        } catch (Exception e) {
+            Log.info("excetion is "+e.getMessage());
+            fail(e.getMessage());
+        }
 
 
         ///demoApplication.setBioMode("DEFAULT");
@@ -72,6 +74,8 @@ public class stepsclass {
     public void enrollpersonwithS1003D() throws Exception {
         Log.info("Test case 2 : Enrolling and validating person with biom S1003D in PERSIST mode");
         demoApplication.enroll_biom_S1002D_S1003D_S1004D_hardcoded("S1003D");
+        //what happens if excetion is not caught and logged. will the test fail . throws excetion and
+        //prints in console but test does not fail
 
     }
     @When("Enroll person with IdNo is NULL")
@@ -88,7 +92,7 @@ public class stepsclass {
         ICS_data data = setICSData.SetData(tdNo, Itinid,"S1002D",utilities.generateValidityEndDateTime(),"C");
         sendToQueue.SendToKafka(data);
 
-    }
 
+    }
 
 }
