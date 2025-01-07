@@ -7,6 +7,7 @@ import com.example.kafka_test.queueData.ICS_data;
 import com.example.kafka_test.database.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Component
-
 public class DemoApplication  {
    /* @Autowired
     private KafkaTemplate<String, String> Template;*/
@@ -48,6 +48,7 @@ public class DemoApplication  {
     public void init() {
         terminalMapped = mapping.mappingCheckpoint();
     }
+
  /*   //@ShellMethod
     public void SendToKafka(ICS_data data) throws JsonProcessingException {
         Log.info("*** Sending msg to Kafka Queue ***");
@@ -71,7 +72,7 @@ public class DemoApplication  {
     }
 
 
-    public void enroll(String TdNo, String ItinId, String nric,String VDT_input,String terminal) throws Exception {
+ /*   public void enroll(String TdNo, String ItinId, String nric,String VDT_input,String terminal) throws Exception {
         SetICSData setICSData= new SetICSData();
         ICS_data data= setICSData.SetData(TdNo, ItinId, nric,VDT_input,terminal);
 
@@ -181,12 +182,12 @@ public class DemoApplication  {
 
 
        // }
-      /*  catch(Exception e){
+      *//*  catch(Exception e){
             Log.info(e.getMessage());
-        }*/
+        }*//*
     }
     //@ShellMethod
-   /* public void Enroll2personDiffTdNo(String TdNo, String ItinId, String nric,String VDT_input, String TdNo2, String ItinId2,String terminal) throws Exception {
+   *//* public void Enroll2personDiffTdNo(String TdNo, String ItinId, String nric,String VDT_input, String TdNo2, String ItinId2,String terminal) throws Exception {
 
         Log.info(" **** Test case  Enroll 2 different person with different TdNo but same nric, dob & natCd");
 
@@ -220,7 +221,7 @@ public class DemoApplication  {
                 ,VDT_input,personid2);
         validateController.validate_terminal_personId(personid2);
 
-    }*/
+    }*//*
 
     public void Enroll2personDiffTdNo_hardcoded() throws Exception {
 
@@ -280,7 +281,7 @@ public class DemoApplication  {
         validateController.validate_terminal_personId(personid2);
     }
 
-    /*
+    *//*
     @ShellMethod //23-10 new change
     public void Enroll2personDiffnatCd_hardcoded() throws Exception {
 
@@ -380,7 +381,7 @@ public class DemoApplication  {
         validateController.validate_terminal_personId(personid2);
     }
 
-     */
+     *//*
 
 
     public void Enroll2Itin1person_hardcoded() throws Exception {
@@ -479,13 +480,13 @@ public class DemoApplication  {
         Log.info("**** Enrolling 1 person with biom *** ");
 
 
-       /* if (bioMode != null) {
+       *//* if (bioMode != null) {
             System.out.println("Enrolling with BioMode: " + bioMode);
 
         } else {
             System.out.println("BioMode not set. Please set it using 'setBioMode' command.");
             return;
-        }*/
+        }*//*
 
         utilities.dropTable();
         int statusCode = apIs.DeleteAPI();
@@ -542,6 +543,6 @@ public class DemoApplication  {
         }catch(Exception e){
             Log.info(e.getMessage());
         }
-    }
+    }*/
 
 }

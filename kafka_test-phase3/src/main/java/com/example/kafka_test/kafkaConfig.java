@@ -1,5 +1,6 @@
 package com.example.kafka_test;
 
+import jakarta.annotation.PreDestroy;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,6 @@ public class kafkaConfig {
         config.put(ProducerConfig.BATCH_SIZE_CONFIG,16384);
         config.put(ProducerConfig.LINGER_MS_CONFIG,1);
         config.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
-
 
         return new DefaultKafkaProducerFactory<>(config);
     }

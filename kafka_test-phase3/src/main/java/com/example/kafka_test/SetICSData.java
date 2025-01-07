@@ -66,19 +66,19 @@ public class SetICSData {
         return icsData;
     }
 
-    public ICS_data SetDatawithnatCd(String TdNo, String ItinId, String nric, String VDT,  String terminal,String natCd) {
+    public ICS_data SetDatawithTdNoNatcdDob(String TdNo, String ItinId, String nric, String VDT, String terminal, String natCd, String Dob) {
         ICS_data icsData= new ICS_data();
 
         traveller_Info t= new traveller_Info();
-        t.setDobTxt("20090101");
+        t.setDobTxt(Dob);
         t.setIdNo(nric);
         t.setTdNo(TdNo);
-        t.setNatCd(natCd);
+        t.setNatCd("SG");
 
         t.setEligibleForContactless(true);
 
         Itinerary_Info a= new Itinerary_Info();
-        a.setChkptCd(terminal);
+        a.setChkptCd("C");
         a.setItineraryId(ItinId);
         a.setStatInOut("I");
         a.setValidityEndDateTime(VDT);

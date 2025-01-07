@@ -20,7 +20,7 @@ public class KafkaTestApplication {
 
 	public static void main(String[] args) {
 
-		//SpringApplication.run(KafkaTestApplication.class, args);
+//		SpringApplication.run(KafkaTestApplication.class, args);
 
 		try {
 			String[] cucumberArgs = {
@@ -34,20 +34,12 @@ public class KafkaTestApplication {
 
 			// Run Cucumber tests and wait for them to finish
 			int exitCode = Main.run(cucumberArgs, Thread.currentThread().getContextClassLoader());
-
-			// Only proceed if Cucumber tests ran successfully (exit code 0 indicates success)
-			if (exitCode == 0) {
-				// Generate the Cucumber report after tests finish
-				generateCucumberReport();
-			} else {
-				System.out.println("Cucumber tests failed with exit code " + exitCode);
-			}
+			generateCucumberReport();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-
 
 
 		private static void generateCucumberReport() {
