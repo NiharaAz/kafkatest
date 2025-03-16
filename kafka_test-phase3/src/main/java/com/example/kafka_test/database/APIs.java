@@ -3,6 +3,8 @@ package com.example.kafka_test.database;
 import com.example.kafka_test.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class APIs {
@@ -24,11 +23,47 @@ public class APIs {
     private final Utilities utilities;
     private final String url_phase3="http://172.16.24.15:31201" ; //23-10 changed
     private final String urlMMbs = "http://172.16.24.15:31200";
+    public static final Logger Log = LoggerFactory.getLogger(APIs.class);
 
     @Autowired
     public APIs(Mapping mapping, Utilities utilities) {
         this.mapping = mapping;
         this.utilities = utilities;
+    }
+
+    public void authenticateAPI(String nric,String tdNo, String natCd,String dob) throws IOException, URISyntaxException, InterruptedException {
+        Log.info(" **** sending Authenticate request ****");
+
+        String key=nric;
+        Map<String, List<Biometric>> mapping_of_biometrics_to_nric = mapping.mapping_of_biom_to_nric();
+        List<Biometric> b = mapping_of_biometrics_to_nric.get(key);
+        AuthenticateRequest authenticateRequest= new AuthenticateRequest();
+        authenticateRequest.setBiometric(b);
+        uid UID = new uid();
+        UID.setDob(dob);
+        UID.setPptNum(tdNo);
+        UID.setNatCd(natCd);
+        authenticateRequest.setUID(UID);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String biometrics_string = objectMapper.writeValueAsString(authenticateRequest);
+
+
+        String requestId= UUID.randomUUID().toString();
+        HttpRequest postReq= HttpRequest.newBuilder()
+                            .uri(new URI(url_phase3+"/camel/ONE-ID/v1/authenticate-person?requestId="+requestId))
+                            .POST(HttpRequest.BodyPublishers.ofString(biometrics_string))
+                            .build();
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpResponse<String> getResponse = httpClient.send(postReq, HttpResponse.BodyHandlers.ofString());
+
+        Thread.sleep(20000);
+
+        JsonNode rootNode = objectMapper.readTree(getResponse.body());
+        Log.info("rootNode is " + rootNode);
+        String decision = rootNode.path("decision").asText();
+        Log.info("decision is "+decision);
+
     }
 
     public void mmbsGETBIOMapi(String personid, String nric) throws URISyntaxException, IOException, InterruptedException {
@@ -78,11 +113,11 @@ public class APIs {
         }
     }
 
-
-    public void identify(String requestid,String tdNo,String natCd, String DOB,String Terminal,
+    public void identify(String tdNo,String natCd, String DOB,String Terminal,
                          String Direction,String VDET, String nric) throws URISyntaxException, IOException, InterruptedException {
 
-        validate_controller.Log.info(" **** sending Identify request ****");
+        Log.info(" **** sending Identify request ****");
+        String requestid= UUID.randomUUID().toString();
 
         //Utilities utilities = new Utilities();
         VDET = utilities.ChangeVDT_to_SGt_identifyAPI(VDET);
@@ -112,7 +147,7 @@ public class APIs {
         Thread.sleep(20000);
 
         JsonNode rootNode = objectMapper.readTree(getResponse.body());
-        validate_controller.Log.info("rootNode is " + rootNode);
+        Log.info("rootNode is " + rootNode);
         JsonNode candidates = rootNode.path("candidate");
 
 
@@ -166,10 +201,10 @@ public class APIs {
         if (decision.equals("HIT") && pptNum.equals(tdNo) && natcd.equals(natCd) && terminal.equals(Terminal)
                 && fltArrvlDateTime.equals(VDET) && dob.equals(DOB)
                 && direction.equals(Direction) && optionalelement.equals(nric)) {
-            validate_controller.Log.info("*** Identify passed ");
+                Log.info("*** Identify passed ");
 
         } else {
-            validate_controller.Log.info(" **** Identify failed ****");
+            Log.info(" **** Identify failed ****");
         }
 
     }

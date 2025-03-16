@@ -1,7 +1,7 @@
 {
   "travellerInfo": {
-    "idNo": "S1008",
-    "tdNo": "212",
+    "idNo": "S1002D",
+    "tdNo": "E08232546J",
     "natCd": "SG",
     "dobTxt": 20010901,
     "eligibleForContactless": true
@@ -9,8 +9,9 @@
   "itineraryInfo": {
     "chkptCd": "C",
     "statInOut": "I",
-    "validityEndDateTime": "2025-12-08T11:15:20Z",
-    "itineraryId": "itinerary1"
+    "validityEndDateTime": "2025-06-30T10:15:20Z",
+    "itineraryId": "201",
+    "otherLocations": []
   },
   "mmbsRefInfo": {
     "dataSrc": "TRANSIENT",

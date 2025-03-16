@@ -8,6 +8,8 @@ import com.example.kafka_test.database.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,8 @@ public class DemoApplication  {
         this.mapping = mapping;
     }
 
-    private Map<String, String> terminalMapped;
+    @Getter @Setter
+     Map<String, String> terminalMapped;
     @PostConstruct
     public void init() {
         terminalMapped = mapping.mappingCheckpoint();

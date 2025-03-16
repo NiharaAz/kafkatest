@@ -52,7 +52,7 @@ public class updateItinDemoApplication {
         Log.info( " **** Testing update VDET test case ***" );
 
         SetICSData setICSData= new SetICSData();
-        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal);
+        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal,"SG", "20010901");
         SendToKafka(data);
         String natCd= data.getTravellerInfo().getNatCd();
         String dob= data.getTravellerInfo().getDobTxt();
@@ -64,7 +64,7 @@ public class updateItinDemoApplication {
         System.out.println("whats the updated VDET?");
         String VDT_update=sc.nextLine();
 
-        ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT_update,terminal);
+        ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT_update,terminal,"SG", dob);
         SendToKafka(data1);
         String translatedId1 =validateController.validate_itineraryId(ItinId,nric,TdNo,natCd,dob,
                 "SIN1","I",VDT_update,personId);
@@ -85,7 +85,7 @@ public class updateItinDemoApplication {
         String VDT_update= "2028-12-12T01:00:00+08:00";
 
         SetICSData setICSData= new SetICSData();
-        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal);
+        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal,"SG", "20010901");
         SendToKafka(data);
         String natCd= "SG";
         String dob= data.getTravellerInfo().getDobTxt();
@@ -99,7 +99,7 @@ public class updateItinDemoApplication {
         validateController.validate_doc_bcbp("I",terminal,VDT,translatedId);
 
 
-        ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT_update,"C");
+        ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT_update,"C","SG", dob);
         SendToKafka(data1);
         Thread.sleep(5000);
         translatedId =validateController.validate_itineraryId(ItinId,nric,TdNo,natCd,dob,
@@ -114,7 +114,7 @@ public class updateItinDemoApplication {
         Log.info( " **** Testing update checkpoint test case ***" );
 
         SetICSData setICSData= new SetICSData();
-        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal);
+        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal,"SG", "20010901");
         SendToKafka(data);
         String natCd= data.getTravellerInfo().getNatCd();
         String dob= data.getTravellerInfo().getDobTxt();
@@ -129,7 +129,7 @@ public class updateItinDemoApplication {
         Map<String,String> chkpt = mapping.mappingCheckpoint();
         String chkpt_update= chkpt.get(terminal_update);
 
-        ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT,terminal_update);
+        ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT,terminal_update,"SG", dob);
         SendToKafka(data1);
         translatedId =validateController.validate_itineraryId(ItinId,nric,TdNo,natCd,dob, chkpt_update,"I",VDT,personId);
         validateController.validate_doc_bcbp("I",chkpt_update,VDT,translatedId);
@@ -150,7 +150,7 @@ public class updateItinDemoApplication {
         String personId = null;
         
         SetICSData setICSData= new SetICSData();
-        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal);
+        ICS_data data= setICSData.SetData(TdNo, ItinId,nric,VDT,terminal,"SG", "20010901");
         SendToKafka(data);
         String natCd= data.getTravellerInfo().getNatCd();
         String dob= data.getTravellerInfo().getDobTxt();
@@ -164,7 +164,7 @@ public class updateItinDemoApplication {
             String chkpt_update= chkpt.get(terminal_update);
 
             Log.info("*** sending terminal = SIN2 ***");
-            ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT,terminal_update);
+            ICS_data data1= setICSData.SetData(TdNo,ItinId,nric,VDT,terminal_update,"SG", dob);
             SendToKafka(data1);
             Thread.sleep(5000);
 

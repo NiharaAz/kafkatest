@@ -83,16 +83,24 @@ public class validate_controller {
         boolean found = false;
         String TranslatedId = null;
         for (itinerary itinerary : icsItinerayIterable) {
-            Log.info("printing null nric "+itinerary.getID_NO());
-
-            if (itinerary.getITIN_ID().equals(itinId) && itinerary.getID_NO().equals(nric) &&
-                    itinerary.getNAT_CD().equals(natCd) && itinerary.getTERMINAL().equals(terminal)
-                    && itinerary.getTD_NO().equals(tdNo) && itinerary.getDATE_OF_BIRTH().equals(dob)
-                     && itinerary.getDIRECTION().equals(direction)
-                    && itinerary.getPERSON_ID().equals(personId) && itinerary.getVALIDITY_END().split("\\.")[0].equals(VDT_UTC)) {
-                found = true;
-                TranslatedId = itinerary.getTRANSLATED_ID();
-                break;
+            /*Log.info("printing null nric "+itinerary.getID_NO());
+            Log.info("itinerry dob is "+itinerary.getDATE_OF_BIRTH());
+            Log.info("itineray itin id is"+itinerary.getITIN_ID()+"itineray direction is "+itinerary.getDIRECTION()+"natcd is "+itinerary.getNAT_CD()
+            +"personid is "+itinerary.getPERSON_ID()+"tdno is"+itinerary.getTD_NO()+"vdet is " +itinerary.getVALIDITY_END().split("\\.")[0]);
+*/
+            if (itinerary.getITIN_ID().equals(itinId)
+                    && itinerary.getID_NO().equals(nric)
+                    && itinerary.getNAT_CD().equals(natCd)
+                    && itinerary.getTD_NO().equals(tdNo)
+                    && itinerary.getPERSON_ID().equals(personId)
+                    // added new from here
+                    && itinerary.getDATE_OF_BIRTH().equals(dob)
+                    && itinerary.getDIRECTION().equals(direction)
+                    && itinerary.getTERMINAL().equals(terminal))
+                     {
+                        found = true;
+                        TranslatedId = itinerary.getTRANSLATED_ID();
+                        break;
             }
         }
         if (found) {

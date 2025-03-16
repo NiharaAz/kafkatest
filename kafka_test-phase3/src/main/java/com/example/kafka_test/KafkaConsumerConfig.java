@@ -24,17 +24,17 @@ public class KafkaConsumerConfig {
 
     @Bean
     public String dynamicGrpId(){
-         String grpID="test123456";
-       // String grpID = "groupId_"+ UUID.randomUUID().toString();
+       //  String grpID="test123456";
+       String grpID = "groupId_"+ UUID.randomUUID().toString();
         System.out.println("grou id is "+grpID);
         return grpID;
     }
 
     @Bean
-    public ConsumerFactory<String,String> consumerFactory( ){
+    public ConsumerFactory<String,String> consumerFactory(String dynamicGrpId ){
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"172.16.24.71:9094");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG,"test123456" );
+        props.put(ConsumerConfig.GROUP_ID_CONFIG,dynamicGrpId );
 
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -47,7 +47,7 @@ public class KafkaConsumerConfig {
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
 
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(consumerFactory(dynamicGrpId()));
         return factory;
     }
 

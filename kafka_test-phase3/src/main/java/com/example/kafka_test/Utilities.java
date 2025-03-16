@@ -53,7 +53,7 @@ public class Utilities {
         return result.toString();
     }
     public void dropTable() throws ClassNotFoundException, SQLException {
-        DemoApplication.Log.info("*** DROPPING ALL PHASE 2 TABLES ****");
+        DemoApplication.Log.info("*** DROPPING ALL PHASE 3 TABLES ****");
         Resource resource = resourceLoader.getResource("classpath:SQLfiles/dropALLTABLES.sql");
 
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
